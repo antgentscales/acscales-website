@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A/C Traffic — Meta & TikTok ads that sell</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;600;700&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05070f;
+      --panel: #0b0f1a;
+      --panel-2: #0f1424;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #e9edf7;
+      --muted: #9aa4bd;
+      --accent: #6ef3e8;
+      --accent-2: #ffc163;
+      --red: #ff6b7a;
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 10% 20%, rgba(110, 243, 232, 0.12), transparent 28%),
+                  radial-gradient(circle at 90% 10%, rgba(255, 193, 99, 0.15), transparent 30%),
+                  radial-gradient(circle at 40% 70%, rgba(255, 107, 122, 0.12), transparent 28%),
+                  var(--bg);
+      color: var(--text);
+      font-family: 'Sora', system-ui, -apple-system, sans-serif;
+      line-height: 1.7;
+      font-size: 17px;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    h1, h2, h3, h4 { font-family: 'Epilogue', 'Sora', sans-serif; margin: 0; letter-spacing: -0.02em; }
+    a { color: inherit; text-decoration: none; }
+
+    .glow { position: fixed; filter: blur(80px); opacity: 0.28; z-index: -1; pointer-events: none; }
+    .glow.one { width: 320px; height: 320px; background: #6ef3e8; top: -100px; left: -60px; }
+    .glow.two { width: 360px; height: 360px; background: #ff6b7a; bottom: -140px; right: -40px; }
+    .glow.three { width: 220px; height: 220px; background: #ffc163; bottom: 18%; left: 20%; opacity: 0.24; }
+
+    .page { position: relative; max-width: 1100px; margin: 0 auto; padding: 28px 18px 90px; z-index: 1; }
+
+    .topbar {
+      position: sticky;
+      top: 14px;
+      z-index: 12;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      margin-bottom: 26px;
+      background: rgba(15, 18, 32, 0.86);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(12px);
+      flex-wrap: wrap;
+    }
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6ef3e8, #ffc163);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #0a0c13;
+      letter-spacing: 0.02em;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+    }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .brand strong { font-size: 16px; letter-spacing: 0.02em; }
+    .brand small { color: var(--muted); font-size: 13px; }
+    nav { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    nav a { padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); font-size: 15px; }
+    nav a:hover { border-color: rgba(255,255,255,0.16); background: rgba(255,255,255,0.05); }
+    nav .btn { margin-left: 4px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(135deg, #6ef3e8, #ffc163);
+      color: #0a0c13;
+      box-shadow: var(--shadow);
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4); }
+    .ghost { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid var(--border); box-shadow: none; }
+    .btn.disabled { opacity: 0.55; cursor: not-allowed; box-shadow: none; filter: grayscale(0.2); pointer-events: none; }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 20;
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.22s ease, visibility 0.22s ease;
+    }
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .modal {
+      width: min(420px, 100%);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px 22px;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+      transform: translateY(16px) scale(0.98);
+      opacity: 0;
+      transition: transform 0.22s ease, opacity 0.22s ease;
+    }
+    .modal-overlay.show .modal {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    .modal h3 { margin: 0 0 6px; font-size: 22px; }
+    .modal p { margin: 0 0 14px; color: var(--muted); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      padding: 32px 26px;
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      min-height: 320px;
+    }
+    .hero h1 { font-size: clamp(34px, 4.2vw, 56px); line-height: 1.1; color: var(--text); margin: 12px 0 12px; }
+    .hero p { color: var(--muted); margin: 14px 0 22px; max-width: 520px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { padding: 8px 12px; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.04); color: var(--text); font-size: 14px; }
+
+    .hero .card {
+      background: var(--panel-2);
+      height: 100%;
+      border: 1px solid var(--border);
+    }
+
+    .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .section-head p { margin: 0; color: var(--muted); }
+
+    .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .columns { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+    .card {
+      padding: 16px 16px 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--panel);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.32);
+    }
+    .card h3 { margin-bottom: 6px; font-size: 20px; }
+    .card p { margin: 0; color: var(--muted); }
+    .muted { color: var(--muted); }
+
+    .stat { font-size: 28px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(255,255,255,0.06); border-radius: 999px; border: 1px solid var(--border); color: var(--text); font-size: 13px; }
+    .pill.waitlist { background: rgba(255,107,122,0.1); border-color: rgba(255,107,122,0.4); color: #ff9aa6; font-weight: 700; letter-spacing: 0.01em; }
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent); margin: 28px 0; border: none; }
+    .sold-out { text-decoration: line-through; opacity: 0.65; }
+
+    .list { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 10px; }
+    .list li { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-items: flex-start; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(135deg, #6ef3e8, #ffc163); margin-top: 6px; }
+
+    .cta-band {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(110, 243, 232, 0.14), rgba(255, 193, 99, 0.12));
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+      align-items: center;
+    }
+
+    .contact {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    form { display: grid; gap: 12px; }
+    label { font-weight: 600; font-size: 14px; color: var(--text); }
+    input, textarea, select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 16px;
+    }
+    input::placeholder, textarea::placeholder { color: var(--muted); }
+    textarea { min-height: 120px; resize: vertical; }
+    footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 14px; padding-bottom: 20px; }
+
+    @media (max-width: 760px) {
+      .topbar { border-radius: 18px; }
+      nav { width: 100%; justify-content: flex-start; }
+      nav a, nav .btn { flex: 1 1 calc(50% - 6px); text-align: center; }
+      .hero { padding: 24px 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .modal-overlay,
+      .modal {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow one"></div>
+  <div class="glow two"></div>
+  <div class="glow three"></div>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="logo-mark">AC</div>
+      <div class="brand">
+        <strong>Anthony + Cameron</strong>
+        <small>Meta & TikTok performance partners</small>
+      </div>
+      <nav>
+        <a href="#services">Services</a>
+        <a href="#plays">Playbooks</a>
+        <a href="#pricing">Packages</a>
+        <a href="#contact">Contact</a>
+        <a class="btn" style="padding:10px 14px; font-size:15px;" href="#contact">Book a call</a>
+      </nav>
+    </header>
+
+    <section class="hero" id="top">
+      <div>
+        <div class="pill">New business · Meta + TikTok · Paid social built for revenue</div>
+        <h1>Ads that stop the scroll and book you revenue inside 30 days.</h1>
+        <p>We’re A/C Traffic—Anthony Gentilucci and Cameron Raymond. We’re a fresh, two-person business bringing what we’ve done in-house to our own company. We stay close to the few teams we work with, run the ads, refresh creative weekly, and keep reporting in plain language that is easy to understand so you see signals easy and fast.</p>
+        <div class="chips" style="margin-bottom:14px;">
+          <span class="chip">Meta + Instagram</span>
+          <span class="chip">TikTok</span>
+          <span class="chip">Local + DTC</span>
+          <span class="chip">Creative sprints</span>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn" href="#contact">Start a sprint</a>
+          <a class="btn ghost" href="#plays">See our plays</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="label">What to expect</div>
+        <ul class="list" style="margin-top:10px;">
+          <li><span class="dot"></span><span>Signal in 10–21 days on which hooks, offers, and audiences move revenue.</span></li>
+          <li><span class="dot"></span><span>Multiple creatives per week across static, carousel, and short video.</span></li>
+          <li><span class="dot"></span><span>Local-first or nationwide targeting with budgets you can see at a glance.</span></li>
+          <li><span class="dot"></span><span>Weekly recaps tied to ROAS, CPL, and booked pipeline, no vanity charts.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="services">
+      <div class="section-head">
+        <h2>Paid social without the fluff.</h2>
+        <p>Performance creative + media buying, built and run by the two of us so we can stay personal with every client.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h3>Meta / IG Engine</h3>
+          <p>Conversion campaigns, radius splits, retargeting, and lead routing that actually follows the money.</p>
+          <ul class="list">
+            <li><span class="dot"></span><span>Offer + audience testing every week.</span></li>
+            <li><span class="dot"></span><span>Clear guardrails on spend and CPA.</span></li>
+            <li><span class="dot"></span><span>Pixel, CAPI, and attribution aspects handled.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>TikTok Motion Lab</h3>
+          <p>Short video, Photo/UGC-style hooks, and trend-aware storytelling that feels native, not forced.</p>
+          <ul class="list">
+            <li><span class="dot"></span><span>Storyboard → shoot → edit in 7–10 day cycles.</span></li>
+            <li><span class="dot"></span><span>Voiceover, captions, and cutdowns for multiple ratios.</span></li>
+            <li><span class="dot"></span><span>Retargeting that helps turn warm viewers into conversions.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Landing & tracking</h3>
+          <p>Fast landing variations, offer clarity, and tracking that ties spend to booked revenue.</p>
+          <ul class="list">
+            <li><span class="dot"></span><span>Form and calendar flows that capture intent.</span></li>
+            <li><span class="dot"></span><span>Analytics dashboards you can read in ~90 seconds.</span></li>
+            <li><span class="dot"></span><span>Lightweight experiments instead of heavy rebuilds.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="plays">
+      <div class="section-head">
+        <h2>Playbooks we run</h2>
+        <p>These are the starting points we’ll tailor to your offer.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h3>Local services</h3>
+          <p class="muted">Gyms, med spas, clinics, home services.</p>
+          <ul class="list">
+            <li><span class="dot"></span><span>Geo-fenced Meta campaigns with intro offers and live booking links.</span></li>
+            <li><span class="dot"></span><span>UGC Reels showing real sessions or treatments.</span></li>
+            <li><span class="dot"></span><span>Retargeting with staff intros + testimonial cutdowns.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>DTC / ecommerce</h3>
+          <p class="muted">Founder-led brands that need creative velocity.</p>
+          <ul class="list">
+            <li><span class="dot"></span><span>Angle testing: problem/solution, social proof, bundle offers.</span></li>
+            <li><span class="dot"></span><span>TikTok-first motion, then port best hooks into Meta.</span></li>
+            <li><span class="dot"></span><span>Landing modules for proof, pricing clarity, and upsells.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Real estate</h3>
+          <p class="muted">Agents and teams that want qualified seller leads.</p>
+          <ul class="list">
+            <li><span class="dot"></span><span>Market update ads with instant seller guide download.</span></li>
+            <li><span class="dot"></span><span>Lead routing that qualifies price range, zip, and timeline.</span></li>
+            <li><span class="dot"></span><span>Testimonial retargeting + calendar handoff.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="pricing">
+      <div class="section-head">
+        <h2>Packages that stay flexible</h2>
+        <p>We’re new as a business, so pricing is straightforward and short-term—no long retainers.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h3>Creative Sprint</h3>
+          <p>Two-week creative build you can plug into your buyer—or keep us to launch.</p>
+          <ul class="list">
+            <li><span class="dot"></span><span>6–10 statics, 2–4 carousels, 2 short videos.</span></li>
+            <li><span class="dot"></span><span>Angles, hooks, and CTAs documented.</span></li>
+            <li><span class="dot"></span><span>Flat fee; small % of spend.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Growth</h3>
+          <p>We run Meta + TikTok with discussable creative drops and tight reporting.</p>
+          <ul class="list">
+            <li><span class="dot"></span><span>Percentage of ad spend with a clear floor alongside flat fee.</span></li>
+            <li><span class="dot"></span><span>Fresh creatives and A/B landing tweaks.</span></li>
+            <li><span class="dot"></span><span>Weekly recaps tied to ROAS, MER, CPL.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Scale</h3>
+          <p>For aggressive targets—faster refresh cycles and deeper experimentation.</p>
+          <ul class="list">
+            <li><span class="dot"></span><span>Small percentage of ad spend as budgets rise alongside flat fee.</span></li>
+            <li><span class="dot"></span><span>Priority creative turnaround and testing roadmap.</span></li>
+            <li><span class="dot"></span><span>Direct access to constant communication with the team.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section>
+      <div class="cta-band">
+        <div>
+          <div class="pill">Quick start</div>
+          <div class="pill waitlist" style="margin-top:8px;">Waitlist only · This week’s plans are out of stock</div>
+          <h3 class="sold-out" style="margin:12px 0 8px;">3-ad plan on deck. No % of ad spend, flat fee.</h3>
+          <p class="muted sold-out" style="margin:0;">Drop your offer; we send back hooks, headlines, and budget advice.</p>
+          <p class="muted" style="margin:12px 0 0;">This week is full. Join the waitlist and we’ll slot you into the next drop.</p>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button id="open-plan-modal" class="btn ghost" type="button" aria-haspopup="dialog">Get the plan</button>
+          <span class="chip">2 onboarding slots open this month</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="card" style="background:linear-gradient(150deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));">
+        <div class="pill" style="margin-bottom:10px;">Talk to us</div>
+        <h2 style="margin-bottom:10px;">Tell us what you’re trying to grow.</h2>
+        <p class="muted">We’re new as a business and keep the roster tiny so we can build real relationships. You’ll talk directly to us and skip any handoffs.</p>
+        <div class="chips" style="margin-top:12px;">
+          <span class="chip">Massachusetts-based, student-ran, nationwide</span>
+          <span class="chip">Meta + TikTok</span>
+          <span class="chip">Direct person-to-person access</span>
+        </div>
+      </div>
+      <form class="card">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name">
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@company.com">
+        </div>
+        <div>
+          <label for="company">Business</label>
+          <input id="company" name="company" type="text" placeholder="What you sell or offer">
+        </div>
+        <div>
+          <label for="goal">Primary goal</label>
+          <textarea id="goal" name="goal" placeholder="Booked calls, store visits, online sales—what does success look like in 90 days?"></textarea>
+        </div>
+        <div>
+          <label for="budget">Monthly ad budget</label>
+          <input id="budget" name="budget" type="text" placeholder="$500–$25k">
+        </div>
+        <div>
+          <label for="timeline">Timeline</label>
+          <input id="timeline" name="timeline" type="text" placeholder="e.g., launch in 3 weeks">
+        </div>
+        <button class="btn" type="submit">Send to Anthony & Cameron</button>
+        <p id="form-error" class="muted" style="color: var(--red); margin: 2px 0 0;" aria-live="polite"></p>
+        <p class="muted" style="margin:6px 0 0;">Prefer a call? 774-214-8124</p>
+      </form>
+    </section>
+
+    <footer>
+      <div style="margin-bottom:8px;">A/C Traffic — Meta & TikTok ads that compound.</div>
+      <div style="color:var(--muted);">© 2025. Built by Anthony Gentilucci & Cameron Raymond. Available nationwide.</div>
+    </footer>
+  </div>
+  <div id="plan-overlay" class="modal-overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="plan-title" aria-describedby="plan-body">
+      <h3 id="plan-title">Join the waitlist</h3>
+      <p id="plan-body">Add your details and we’ll send the next 3-ad plan drop to your inbox.</p>
+      <form id="plan-form" style="display:grid; gap:12px;">
+        <div>
+          <label for="plan-name">Name</label>
+          <input id="plan-name" name="plan-name" type="text" placeholder="Your name">
+        </div>
+        <div>
+          <label for="plan-email">Email</label>
+          <input id="plan-email" name="plan-email" type="email" placeholder="you@company.com">
+        </div>
+        <div>
+          <label for="plan-offer">Your offer</label>
+          <input id="plan-offer" name="plan-offer" type="text" placeholder="Product or service">
+        </div>
+        <p id="plan-error" class="muted" style="color: var(--red); margin: -4px 0 0;" aria-live="polite"></p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:2px;">
+          <button class="btn" type="submit">Queue me</button>
+          <button id="plan-close" class="btn ghost" type="button">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="modal-overlay" class="modal-overlay" aria-hidden="true">
+    <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-body">
+      <h3 id="modal-title">Thanks—got it.</h3>
+      <p id="modal-body">We’ll reach out within three business days.</p>
+      <button id="modal-close" class="btn" type="button">Close</button>
+    </div>
+  </div>
+  <script>
+    const form = document.querySelector('form');
+    const overlay = document.getElementById('modal-overlay');
+    const closeBtn = document.getElementById('modal-close');
+    const submitBtn = form ? form.querySelector('button[type=\"submit\"]') : null;
+    const errorMsg = document.getElementById('form-error');
+    const requiredFields = ['name', 'email', 'company', 'goal', 'budget', 'timeline'];
+    const planOverlay = document.getElementById('plan-overlay');
+    const planForm = document.getElementById('plan-form');
+    const planTrigger = document.getElementById('open-plan-modal');
+    const planClose = document.getElementById('plan-close');
+    const planError = document.getElementById('plan-error');
+    const planRequired = ['plan-name', 'plan-email', 'plan-offer'];
+
+    const closeModal = () => {
+      if (!overlay) return;
+      overlay.classList.remove('show');
+      overlay.setAttribute('aria-hidden', 'true');
+      if (submitBtn) submitBtn.focus();
+    };
+
+    const closePlanModal = () => {
+      if (!planOverlay) return;
+      planOverlay.classList.remove('show');
+      planOverlay.setAttribute('aria-hidden', 'true');
+      if (planTrigger) planTrigger.focus();
+    };
+
+    if (form && overlay && closeBtn) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!errorMsg) return;
+
+        const firstEmpty = requiredFields
+          .map((id) => document.getElementById(id))
+          .find((field) => field && !field.value.trim());
+
+        if (firstEmpty) {
+          errorMsg.textContent = 'Please fill in all fields before sending.';
+          firstEmpty.focus();
+          return;
+        }
+
+        errorMsg.textContent = '';
+        overlay.classList.add('show');
+        overlay.setAttribute('aria-hidden', 'false');
+        form.reset();
+        closeBtn.focus();
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('show')) closeModal();
+      });
+    }
+
+    if (planTrigger && planOverlay && planForm && planClose) {
+      planTrigger.addEventListener('click', () => {
+        planOverlay.classList.add('show');
+        planOverlay.setAttribute('aria-hidden', 'false');
+        const firstField = document.getElementById(planRequired[0]);
+        if (firstField) firstField.focus();
+      });
+
+      planForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!planError) return;
+
+        const firstEmpty = planRequired
+          .map((id) => document.getElementById(id))
+          .find((field) => field && !field.value.trim());
+
+        if (firstEmpty) {
+          planError.textContent = 'Add your name, email, and offer to join the waitlist.';
+          planError.style.color = 'var(--red)';
+          firstEmpty.focus();
+          return;
+        }
+
+        planError.textContent = 'You’re queued. We’ll send the next drop to your inbox.';
+        planError.style.color = 'var(--accent)';
+        planForm.reset();
+      });
+
+      planClose.addEventListener('click', closePlanModal);
+      planOverlay.addEventListener('click', (e) => {
+        if (e.target === planOverlay) closePlanModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && planOverlay.classList.contains('show')) closePlanModal();
+      });
+    }
+  </script>
+</body>
+</html>
