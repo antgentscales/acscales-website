@@ -134,6 +134,8 @@
       transform: translateY(16px) scale(0.98);
       opacity: 0;
       transition: transform 0.22s ease, opacity 0.22s ease;
+      max-height: 90vh;
+      overflow: auto;
     }
     .modal-overlay.show .modal {
       transform: translateY(0) scale(1);
@@ -215,6 +217,7 @@
       gap: 16px;
       align-items: start;
     }
+    .contact .card { height: 100%; }
     form { display: grid; gap: 12px; }
     label { font-weight: 600; font-size: 14px; color: var(--text); }
     input, textarea, select {
@@ -227,6 +230,24 @@
       font-family: inherit;
       font-size: 16px;
     }
+    .contact-form,
+    #plan-form-shell {
+      background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    }
+    .hs-form-frame {
+      width: 100%;
+      display: block;
+      margin: 4px 0;
+    }
+    .hs-form-frame iframe {
+      width: 100% !important;
+      max-width: 100%;
+      border: 1px solid var(--border) !important;
+      border-radius: 16px;
+      background: var(--panel-2);
+      box-shadow: var(--shadow);
+      min-height: 520px;
+    }
     input::placeholder, textarea::placeholder { color: var(--muted); }
     textarea { min-height: 120px; resize: vertical; }
     footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 14px; padding-bottom: 20px; }
@@ -236,6 +257,7 @@
       nav { width: 100%; justify-content: flex-start; }
       nav a, nav .btn { flex: 1 1 calc(50% - 6px); text-align: center; }
       .hero { padding: 24px 18px; }
+      .hs-form-frame iframe { min-height: 620px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .modal-overlay,
@@ -436,35 +458,10 @@
           <span class="chip">Direct person-to-person access</span>
         </div>
       </div>
-      <form class="card">
-        <div>
-          <label for="name">Name</label>
-          <input id="name" name="name" type="text" placeholder="Your name">
-        </div>
-        <div>
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="you@company.com">
-        </div>
-        <div>
-          <label for="company">Business</label>
-          <input id="company" name="company" type="text" placeholder="What you sell or offer">
-        </div>
-        <div>
-          <label for="goal">Primary goal</label>
-          <textarea id="goal" name="goal" placeholder="Booked calls, store visits, online sales—what does success look like in 90 days?"></textarea>
-        </div>
-        <div>
-          <label for="budget">Monthly ad budget</label>
-          <input id="budget" name="budget" type="text" placeholder="$500–$25k">
-        </div>
-        <div>
-          <label for="timeline">Timeline</label>
-          <input id="timeline" name="timeline" type="text" placeholder="e.g., launch in 3 weeks">
-        </div>
-        <button class="btn" type="submit">Send to Anthony & Cameron</button>
-        <p id="form-error" class="muted" style="color: var(--red); margin: 2px 0 0;" aria-live="polite"></p>
-        <p class="muted" style="margin:6px 0 0;">Prefer a call? 774-214-8124</p>
-      </form>
+      <div class="card contact-form">
+        <div class="hs-form-frame" data-region="na1" data-form-id="7007ed31-65dc-4174-9072-670610e11d5a" data-portal-id="50807088"></div>
+        <p class="muted" style="margin:10px 0 0;">Prefer a call? 774-214-8124</p>
+      </div>
     </section>
 
     <footer>
@@ -476,54 +473,19 @@
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="plan-title" aria-describedby="plan-body">
       <h3 id="plan-title">Join the waitlist</h3>
       <p id="plan-body">Add your details and we’ll send the next 3-ad plan drop to your inbox.</p>
-      <form id="plan-form" style="display:grid; gap:12px;">
-        <div>
-          <label for="plan-name">Name</label>
-          <input id="plan-name" name="plan-name" type="text" placeholder="Your name">
-        </div>
-        <div>
-          <label for="plan-email">Email</label>
-          <input id="plan-email" name="plan-email" type="email" placeholder="you@company.com">
-        </div>
-        <div>
-          <label for="plan-offer">Your offer</label>
-          <input id="plan-offer" name="plan-offer" type="text" placeholder="Product or service">
-        </div>
-        <p id="plan-error" class="muted" style="color: var(--red); margin: -4px 0 0;" aria-live="polite"></p>
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:2px;">
-          <button class="btn" type="submit">Queue me</button>
-          <button id="plan-close" class="btn ghost" type="button">Close</button>
-        </div>
-      </form>
+      <div id="plan-form-shell" style="margin-top:12px; padding:10px 0;">
+        <div class="hs-form-frame" data-region="na1" data-form-id="7007ed31-65dc-4174-9072-670610e11d5a" data-portal-id="50807088"></div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;">
+        <button id="plan-close" class="btn ghost" type="button">Close</button>
+      </div>
     </div>
   </div>
-  <div id="modal-overlay" class="modal-overlay" aria-hidden="true">
-    <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-body">
-      <h3 id="modal-title">Thanks—got it.</h3>
-      <p id="modal-body">We’ll reach out within three business days.</p>
-      <button id="modal-close" class="btn" type="button">Close</button>
-    </div>
-  </div>
+  <script src="https://js.hsforms.net/forms/embed/50807088.js" defer></script>
   <script>
-    const form = document.querySelector('form');
-    const overlay = document.getElementById('modal-overlay');
-    const closeBtn = document.getElementById('modal-close');
-    const submitBtn = form ? form.querySelector('button[type=\"submit\"]') : null;
-    const errorMsg = document.getElementById('form-error');
-    const requiredFields = ['name', 'email', 'company', 'goal', 'budget', 'timeline'];
     const planOverlay = document.getElementById('plan-overlay');
-    const planForm = document.getElementById('plan-form');
     const planTrigger = document.getElementById('open-plan-modal');
     const planClose = document.getElementById('plan-close');
-    const planError = document.getElementById('plan-error');
-    const planRequired = ['plan-name', 'plan-email', 'plan-offer'];
-
-    const closeModal = () => {
-      if (!overlay) return;
-      overlay.classList.remove('show');
-      overlay.setAttribute('aria-hidden', 'true');
-      if (submitBtn) submitBtn.focus();
-    };
 
     const closePlanModal = () => {
       if (!planOverlay) return;
@@ -532,63 +494,10 @@
       if (planTrigger) planTrigger.focus();
     };
 
-    if (form && overlay && closeBtn) {
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (!errorMsg) return;
-
-        const firstEmpty = requiredFields
-          .map((id) => document.getElementById(id))
-          .find((field) => field && !field.value.trim());
-
-        if (firstEmpty) {
-          errorMsg.textContent = 'Please fill in all fields before sending.';
-          firstEmpty.focus();
-          return;
-        }
-
-        errorMsg.textContent = '';
-        overlay.classList.add('show');
-        overlay.setAttribute('aria-hidden', 'false');
-        form.reset();
-        closeBtn.focus();
-      });
-
-      closeBtn.addEventListener('click', closeModal);
-      overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) closeModal();
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && overlay.classList.contains('show')) closeModal();
-      });
-    }
-
-    if (planTrigger && planOverlay && planForm && planClose) {
+    if (planTrigger && planOverlay && planClose) {
       planTrigger.addEventListener('click', () => {
         planOverlay.classList.add('show');
         planOverlay.setAttribute('aria-hidden', 'false');
-        const firstField = document.getElementById(planRequired[0]);
-        if (firstField) firstField.focus();
-      });
-
-      planForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (!planError) return;
-
-        const firstEmpty = planRequired
-          .map((id) => document.getElementById(id))
-          .find((field) => field && !field.value.trim());
-
-        if (firstEmpty) {
-          planError.textContent = 'Add your name, email, and offer to join the waitlist.';
-          planError.style.color = 'var(--red)';
-          firstEmpty.focus();
-          return;
-        }
-
-        planError.textContent = 'You’re queued. We’ll send the next drop to your inbox.';
-        planError.style.color = 'var(--accent)';
-        planForm.reset();
       });
 
       planClose.addEventListener('click', closePlanModal);
