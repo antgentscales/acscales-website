@@ -702,5 +702,14 @@ if (!window.fbq) {
       });
     }
   </script>
+  <script>
+window.addEventListener('message', function(event) {
+  if (event.data && event.data.type === 'hsFormCallback' && event.data.eventName === 'onFormSubmit') {
+    if (window.fbq) {
+      fbq('track', 'Lead');
+    }
+  }
+});
+</script>
 </body>
 </html>
