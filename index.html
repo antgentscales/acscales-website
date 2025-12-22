@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>function initApollo(){var n=Math.random().toString(36).substring(7),o=document.createElement("script");
+  o.src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="+n,o.async=!0,o.defer=!0,
+  o.onload=function(){window.trackingFunctions.onLoad({appId:"6949a13e201591001d44ebce"})},
+  document.head.appendChild(o)}initApollo();</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ACP Scales — Meta & TikTok ads that sell</title>
@@ -18,6 +22,8 @@
       --accent: #6ef3e8;
       --accent-2: #ffc163;
       --red: #ff6b7a;
+      --teal: rgba(110, 243, 232, 0.12);
+      --amber: rgba(255, 193, 99, 0.14);
       --shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
       --radius: 18px;
     }
@@ -174,6 +180,7 @@
 
     .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
     .columns { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .section-note { color: var(--muted); margin-top: 4px; }
 
     .card {
       padding: 16px 16px 18px;
@@ -188,6 +195,23 @@
 
     .stat { font-size: 28px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
     .label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+    .stat-card {
+      display: grid;
+      gap: 6px;
+      background: linear-gradient(135deg, rgba(110, 243, 232, 0.08), rgba(255, 193, 99, 0.08));
+      border-color: rgba(255,255,255,0.16);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(110, 243, 232, 0.16), transparent 45%),
+                  radial-gradient(circle at 80% 60%, rgba(255, 193, 99, 0.16), transparent 50%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
 
     .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(255,255,255,0.06); border-radius: 999px; border: 1px solid var(--border); color: var(--text); font-size: 13px; }
     .pill.waitlist { background: rgba(255,107,122,0.1); border-color: rgba(255,107,122,0.4); color: #ff9aa6; font-weight: 700; letter-spacing: 0.01em; }
@@ -251,6 +275,58 @@
     input::placeholder, textarea::placeholder { color: var(--muted); }
     textarea { min-height: 120px; resize: vertical; }
     footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 14px; padding-bottom: 20px; }
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .timeline .card {
+      border-color: rgba(255,255,255,0.12);
+      background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    }
+    .step-count {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #0a0c13;
+      background: linear-gradient(135deg, #6ef3e8, #ffc163);
+    }
+    .faq {
+      display: grid;
+      gap: 10px;
+    }
+    .faq .card {
+      border-color: rgba(255,255,255,0.14);
+    }
+    .faq summary {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text);
+      list-style: none;
+    }
+    .faq summary span:last-child {
+      display: inline-flex;
+      width: 22px;
+      height: 22px;
+      border-radius: 8px;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.06);
+      font-weight: 800;
+      border: 1px solid var(--border);
+      transition: transform 0.18s ease;
+    }
+    .faq details[open] summary span:last-child { transform: rotate(45deg); }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq p { margin: 8px 0 0; }
 
     @media (max-width: 760px) {
       .topbar { border-radius: 18px; }
@@ -262,7 +338,7 @@
     @media (prefers-reduced-motion: reduce) {
       .modal-overlay,
       .modal {
-        transition: none !important;
+        transition: none !important; 
       }
     }
   </style>
@@ -280,9 +356,11 @@
         <small>Meta & TikTok performance partners</small>
       </div>
       <nav>
+        <a href="#proof">Proof</a>
         <a href="#services">Services</a>
         <a href="#plays">Playbooks</a>
         <a href="#pricing">Packages</a>
+        <a href="#process">Process</a>
         <a href="#contact">Contact</a>
         <a class="btn" style="padding:10px 14px; font-size:15px;" href="#contact">Book a call</a>
       </nav>
@@ -292,7 +370,7 @@
       <div>
         <div class="pill">New business · Meta + TikTok · Paid social built for revenue</div>
         <h1>Ads that stop the scroll and increase your revenue inside 30 days.</h1>
-        <p>We’re ACP Scales—Anthony Gentilucci and Cameron Raymond. We’re a fresh, two-person business bringing what we’ve done in-house to our own company. We stay close to the few teams we work with, run the ads, refresh creatives as often as needed, and keep reporting in plain language that is easy to understand so you see signals easy and effeciently.</p>
+        <p>We’re ACP Scales—Anthony Gentilucci and Cameron Raymond. We’re a tight, two-person business bringing what we’ve done in-house to our own shop. We stay close to the few teams we work with, run the ads ourselves, refresh creative weekly, and report in plain language so you can see signals fast.</p>
         <div class="chips" style="margin-bottom:14px;">
           <span class="chip">Meta + Instagram</span>
           <span class="chip">TikTok</span>
@@ -307,12 +385,44 @@
       <div class="card">
         <div class="label">What to expect</div>
         <ul class="list" style="margin-top:10px;">
-          <li><span class="dot"></span><span>Signal in 10–21 days on which hooks, offers, and audiences tend to increased revenue trends.</span></li>
+          <li><span class="dot"></span><span>Signal in 10–21 days on which hooks, offers, and audiences are nudging revenue up.</span></li>
           <li><span class="dot"></span><span>Multiple creatives per week across static, carousel, and short video.</span></li>
           <li><span class="dot"></span><span>Local-first or nationwide targeting with budgets you can see at a glance.</span></li>
           <li><span class="dot"></span><span>Weekly recaps tied to ROAS, CPL, and booked pipeline, no vanity charts.</span></li>
         </ul>
       </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="proof">
+      <div class="section-head">
+        <h2>Proof and signals we chase</h2>
+        <p>Plain-English metrics we hold ourselves to—no vanity charts.</p>
+      </div>
+      <div class="grid">
+        <div class="card stat-card">
+          <div class="label">First signal</div>
+          <div class="stat">10–21 days</div>
+          <p>Which hooks, offers, and audiences start nudging revenue in the right direction.</p>
+        </div>
+        <div class="card stat-card">
+          <div class="label">Creative volume</div>
+          <div class="stat">10–16 / month</div>
+          <p>Statics, carousels, and short video for both Meta and TikTok—refreshes by default.</p>
+        </div>
+        <div class="card stat-card">
+          <div class="label">Reporting</div>
+          <div class="stat">90s read</div>
+          <p>Dashboards and Loom recaps that tie back to ROAS, MER, CPL, and pipeline.</p>
+        </div>
+        <div class="card stat-card">
+          <div class="label">Roster</div>
+          <div class="stat">6 teams max</div>
+          <p>We keep the roster tiny so you always talk to us directly—no handoffs.</p>
+        </div>
+      </div>
+      <p class="section-note">We’ll call out when something isn’t working and shift fast—clarity beats perfect creative.</p>
     </section>
 
     <hr class="divider">
@@ -431,6 +541,44 @@
 
     <hr class="divider">
 
+    <section id="process">
+      <div class="section-head">
+        <h2>How the first 30 days run</h2>
+        <p>Fast-moving steps we repeat every month.</p>
+      </div>
+      <div class="timeline">
+        <div class="card">
+          <div class="step-count">01</div>
+          <h3>Intake & audit</h3>
+          <p class="muted">Offer + ICP review, pixels checked, and creative gaps outlined within 72 hours.</p>
+          <ul class="list">
+            <li><span class="dot"></span><span>Pick 1–2 main offers and set guardrails on CPA/MER.</span></li>
+            <li><span class="dot"></span><span>Tracking sanity check across Meta, TikTok, GA, HubSpot.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="step-count">02</div>
+          <h3>Creative sprint</h3>
+          <p class="muted">7–10 day drop with static, carousel, and short video variants for testing.</p>
+          <ul class="list">
+            <li><span class="dot"></span><span>Angles built from call notes, testimonials, and objections.</span></li>
+            <li><span class="dot"></span><span>Landing tweaks for clarity, proof, and better form fill quality.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="step-count">03</div>
+          <h3>Launch & learn</h3>
+          <p class="muted">Budget split by audience/geo, signals gathered daily, and creative swapped quickly.</p>
+          <ul class="list">
+            <li><span class="dot"></span><span>Daily optimizations; we report what we killed and what’s winning.</span></li>
+            <li><span class="dot"></span><span>Weekly recap tied to ROAS, CPL, and booked pipeline.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
     <section>
       <div class="cta-band">
         <div>
@@ -447,13 +595,36 @@
       </div>
     </section>
 
+    <hr class="divider">
+
+    <section id="faq">
+      <div class="section-head">
+        <h2>Questions we get</h2>
+        <p>Quick answers so you know how we work before we hop on a call.</p>
+      </div>
+      <div class="faq">
+        <details class="card">
+          <summary><span>How small is your roster?</span><span aria-hidden="true">+</span></summary>
+          <p class="muted">We cap at six active teams. You always message directly with Anthony or Cameron—no account managers.</p>
+        </details>
+        <details class="card">
+          <summary><span>Do you handle tracking?</span><span aria-hidden="true">+</span></summary>
+          <p class="muted">Yes—pixels, CAPI, and attribution checks are part of onboarding. We’ll flag gaps before launching spend.</p>
+        </details>
+        <details class="card">
+          <summary><span>What if performance dips?</span><span aria-hidden="true">+</span></summary>
+          <p class="muted">We call it out, pause what’s not working, and ship fresh angles. Reporting is built around ROAS/CPL—not vanity metrics.</p>
+        </details>
+      </div>
+    </section>
+
     <section id="contact" class="contact">
       <div class="card" style="background:linear-gradient(150deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));">
         <div class="pill" style="margin-bottom:10px;">Talk to us</div>
         <h2 style="margin-bottom:10px;">Tell us what you’re trying to grow.</h2>
         <p class="muted">We’re new as a business and keep the roster tiny so we can build real relationships. You’ll talk directly to us and skip any handoffs.</p>
         <div class="chips" style="margin-top:12px;">
-          <span class="chip">Massachusetts-based, student-ran, nationwide</span>
+          <span class="chip">Massachusetts-based, student-run, nationwide</span>
           <span class="chip">Meta + TikTok</span>
           <span class="chip">Direct person-to-person access</span>
         </div>
