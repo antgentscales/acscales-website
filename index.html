@@ -327,13 +327,6 @@
     .faq details[open] summary span:last-child { transform: rotate(45deg); }
     .faq summary::-webkit-details-marker { display: none; }
     .faq p { margin: 8px 0 0; }
-    .thank-you {
-      display: none;
-      margin-top: 28px;
-    }
-    #thank-you:target {
-      display: block;
-    }
 
     @media (max-width: 760px) {
       .topbar { border-radius: 18px; }
@@ -362,6 +355,7 @@ if (!window.fbq) {
   'https://connect.facebook.net/en_US/fbevents.js');
 
   fbq('init', '1188896676783732');
+  fbq('track', 'PageView');
 }
 </script>
 <noscript>
@@ -569,17 +563,6 @@ if (!window.fbq) {
         <p class="muted" style="margin:10px 0 0;">Prefer a call? 774-214-8124</p>
       </div>
     </section>
-    <section id="thank-you" class="thank-you">
-      <div class="card" style="text-align:center;">
-        <div class="pill">Request received</div>
-        <h2>Thanks — we got it.</h2>
-        <p class="muted">We just received your details. We’ll reply soon with next steps and availability.</p>
-        <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-          <a class="btn" href="#top">Back to top</a>
-          <a class="btn ghost" href="#contact">Edit your info</a>
-        </div>
-      </div>
-    </section>
 
     <footer>
       <div style="margin-bottom:8px;">ACP Scales — Meta & TikTok ads that compound.</div>
@@ -611,12 +594,7 @@ if (!window.fbq) {
       }
 
       function redirectThankYou() {
-        const thankYou = document.getElementById('thank-you');
-        if (thankYou) {
-          sessionStorage.setItem('contactThanks', '1');
-          window.location.hash = 'thank-you';
-          thankYou.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        window.location.href = 'thank-you.html';
       }
 
       function isContactFormFrame(sourceWindow) {
@@ -652,16 +630,6 @@ if (!window.fbq) {
         if (isContactFormTarget(target)) {
           fireLead();
           redirectThankYou();
-        }
-      });
-
-      document.addEventListener('DOMContentLoaded', function () {
-        if (window.location.hash === '#thank-you') {
-          if (!sessionStorage.getItem('contactThanks')) {
-            history.replaceState(null, '', window.location.pathname + window.location.search);
-          } else {
-            sessionStorage.removeItem('contactThanks');
-          }
         }
       });
     })();
