@@ -583,56 +583,56 @@ if (!window.fbq) {
   </div>
   <script src="https://js.hsforms.net/forms/embed/50807088.js" defer></script>
   <script>
-    (function () {
-      const planOverlay = document.getElementById('plan-overlay');
+    // (function () {
+    //   const planOverlay = document.getElementById('plan-overlay');
 
-      function fireLead() {
-        if (window.fbq) {
-          fbq('track', 'Lead');
-          console.log('Meta Lead fired (contact form)');
-        }
-      }
+    //   function fireLead() {
+    //     if (window.fbq) {
+    //       fbq('track', 'Lead');
+    //       console.log('Meta Lead fired (contact form)');
+    //     }
+    //   }
 
-      function redirectThankYou() {
-        window.location.href = 'thank-you.html';
-      }
+    //   function redirectThankYou() {
+    //     window.location.href = 'thank-you.html';
+    //   }
 
-      function isContactFormFrame(sourceWindow) {
-        const contactShell = document.getElementById('contact-form-shell');
-        if (!contactShell || !sourceWindow) return false;
-        const frames = Array.from(contactShell.querySelectorAll('iframe'));
-        return frames.some((frame) => frame.contentWindow === sourceWindow);
-      }
+    //   function isContactFormFrame(sourceWindow) {
+    //     const contactShell = document.getElementById('contact-form-shell');
+    //     if (!contactShell || !sourceWindow) return false;
+    //     const frames = Array.from(contactShell.querySelectorAll('iframe'));
+    //     return frames.some((frame) => frame.contentWindow === sourceWindow);
+    //   }
 
-      function isContactFormTarget(target) {
-        if (!target || !target.closest) return false;
-        return Boolean(target.closest('#contact-form-shell'));
-      }
+    //   function isContactFormTarget(target) {
+    //     if (!target || !target.closest) return false;
+    //     return Boolean(target.closest('#contact-form-shell'));
+    //   }
 
-      function isPlanModalOpen() {
-        return planOverlay && planOverlay.classList.contains('show');
-      }
+    //   function isPlanModalOpen() {
+    //     return planOverlay && planOverlay.classList.contains('show');
+    //   }
 
-      window.addEventListener('message', function (event) {
-        if (!event.data) return;
-        if (
-          event.data.type === 'hsFormCallback' &&
-          event.data.eventName === 'onFormSubmitted'
-        ) {
-          if (isPlanModalOpen()) return;
-          fireLead();
-          redirectThankYou();
-        }
-      });
+    //   window.addEventListener('message', function (event) {
+    //     if (!event.data) return;
+    //     if (
+    //       event.data.type === 'hsFormCallback' &&
+    //       event.data.eventName === 'onFormSubmitted'
+    //     ) {
+    //       if (isPlanModalOpen()) return;
+    //       fireLead();
+    //       redirectThankYou();
+    //     }
+    //   });
 
-      document.addEventListener('hsFormSubmitted', function (event) {
-        const target = event.target;
-        if (isContactFormTarget(target)) {
-          fireLead();
-          redirectThankYou();
-        }
-      });
-    })();
+    //   document.addEventListener('hsFormSubmitted', function (event) {
+    //     const target = event.target;
+    //     if (isContactFormTarget(target)) {
+    //       fireLead();
+    //       redirectThankYou();
+    //     }
+    //   });
+    // })();
 
     const planOverlay = document.getElementById('plan-overlay');
     const planTrigger = document.getElementById('open-plan-modal');
